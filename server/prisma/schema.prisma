@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  emailVerified  Boolean   @default(false)
+  image          String?
+  credits        Int       @default(4000)
+  totalCreations Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  projects       WebsiteProject[]
+  transactions   Transaction[]
+  sessions       Session[]
+  accounts       Account[]
+}
+model WebsiteProject {
+  id                  String   @id @default(cuid())
+  userId              String
+  name                String
+  initialPrompt       String
+  currentCode         String?
+  currentVersionIndex String?
+  isPublic            Boolean  @default(false)
+  createdAt           DateTime @default(now())
+
+  user          User           @relation(fields: [userId], references: [id])
+  versions      Version[]
+  conversations Conversation[]
+}
+
+model Version {
+  id        String   @id @default(cuid())
+  projectId String
+  code      String
+  createdAt DateTime @default(now())
+
+  project WebsiteProject @relation(fields: [projectId], references: [id])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  projectId String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  project WebsiteProject @relation(fields: [projectId], references: [id])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  userId    String
+  credits   Int
+  amount    Int
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+}

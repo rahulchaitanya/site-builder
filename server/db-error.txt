@@ -1,0 +1,15 @@
+PrismaClientKnownRequestError: 
+Invalid `prisma.user.count()` invocation in
+C:\Users\rahul\OneDrive\Desktop\site builder\server\server.ts:33:41
+
+  30 
+  31 app.get('/api/test-db', async (req, res) => {
+  32   try {
+→ 33     const userCount = await prisma.user.count(
+
+    at Jr.handleRequestError (C:\Users\rahul\OneDrive\Desktop\site builder\server\node_modules\@prisma\client\src\runtime\RequestHandler.ts:237:13)
+    at Jr.handleAndLogRequestError (C:\Users\rahul\OneDrive\Desktop\site builder\server\node_modules\@prisma\client\src\runtime\RequestHandler.ts:183:12)
+    at Jr.request (C:\Users\rahul\OneDrive\Desktop\site builder\server\node_modules\@prisma\client\src\runtime\RequestHandler.ts:152:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\rahul\OneDrive\Desktop\site builder\server\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:1014:24)
+    at async <anonymous> (C:\Users\rahul\OneDrive\Desktop\site builder\server\server.ts:33:23)
