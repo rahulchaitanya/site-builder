@@ -46,7 +46,7 @@ const AuthPage = () => {
             {mode === 'signin' ? 'Welcome back' : 'Create account'}
           </h1>
           <p className="text-gray-500 text-sm mt-1">
-            {mode === 'signin' ? 'Sign in to continue building' : 'Start with 20 free credits'}
+            {mode === 'signin' ? 'Sign in to continue building' : 'Start with 4000 free credits'}
           </p>
         </div>
 
