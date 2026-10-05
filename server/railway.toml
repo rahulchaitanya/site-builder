@@ -6,3 +6,9 @@ buildCommand = "npm install"
 startCommand = "node --import tsx/esm server.ts"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
+
+[build.nixpacksConfig]
+providers = ["node"]
+
+[variables]
+NODE_VERSION = "22"
